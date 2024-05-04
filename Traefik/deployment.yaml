@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: Traefik
+    app.kubernetes.io/instance: Traefik
+    app.kubernetes.io/name: Traefik
+  name: Traefik
+  namespace: Traefik
+spec:
+  selector:
+    matchLabels:
+      app: Traefik
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: Traefik
+    spec:
+      # initContainers:
+      # Init containers are exactly like regular containers, except:
+      # - Init containers always run to completion.
+      # - Each init container must complete successfully before the next one starts.
+      nodeSelector:
+        worker: "true"
+      containers:
+        - name: Traefik
+          image: traefik:latest
+          resources:
+            requests:
+              cpu: 100m
+              memory: 100Mi
+            limits:
+              cpu: 100m
+              memory: 100Mi
+          env:
+            - name: DB_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: Traefik
+                  key: DB_HOST
+          ports:
+            - containerPort: 80
+              name: Traefik
+          volumeMounts:
+            - name: localtime
+              mountPath: /etc/localtime
+      volumes:
+        - name: localtime
+          hostPath:
+            path: /usr/share/zoneinfo/Asia/Shanghai
+      restartPolicy: Always
