@@ -1,9 +1,9 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: my-name
+  name: sonarr
   labels:
-    name: my-name
+    name: sonarr
 spec:
   strategy:
     rollingUpdate:
@@ -13,11 +13,11 @@ spec:
   template:
     metadata:
       labels:
-        name: my-name
+        name: sonarr
     spec:
       containers:
         - image: ipedrazas/docmock
-          name: my-name
+          name: sonarr
           resources:
             requests:
               cpu: "20m"
@@ -39,7 +39,7 @@ spec:
               value: ENVVARVALUE
           ports:
             - containerPort: 5000
-              name: my-name
+              name: sonarr
           volumeMounts:
             - mountPath: /data
               name: data
