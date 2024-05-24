@@ -4,10 +4,6 @@
 # YOU SHOULD ONLY NEED TO EDIT THIS SECTION #
 #############################################
 
-# THIS SCRIPT IS FOR RKE2, NOT K3S!
-# THIS SCRIPT IS FOR RKE2, NOT K3S!
-# THIS SCRIPT IS FOR RKE2, NOT K3S!
-
 # Set the IP addresses of master1
 master1=192.168.10.30
 
@@ -46,7 +42,7 @@ done
 # add open-iscsi - needed for Debian and non-cloud Ubuntu
 if ! command -v sudo service open-iscsi status &> /dev/null
 then
-    echo -e " \033[31;5mOpen-ISCSI not found, installing\033[0m"
+    echo -e " \033[31;5mOpen-ISCSI not found, installing it now\033[0m"
     sudo apt install open-iscsi
 else
     echo -e " \033[32;5mOpen-ISCSI already installed\033[0m"
@@ -68,7 +64,7 @@ for newnode in "${storage[@]}"; do
   systemctl start rke2-agent.service
   exit
 EOF
-  echo -e " \033[32;5mLonghorn node joined successfully!\033[0m"
+  echo -e " \033[32;5mLonghorn node joined successfully\033[0m"
 done
 
 # Step 2: Install Longhorn (using modified Official to pin to Longhorn Nodes)
@@ -82,4 +78,4 @@ kubectl get pods \
 kubectl get nodes
 kubectl get svc -n longhorn-system
 
-echo -e " \033[32;5mHappy Kubing! Access Longhorn through Rancher UI\033[0m"
+echo -e " \033[32;5mYou should now be able to screw up a cluster via Longhorn\033[0m"

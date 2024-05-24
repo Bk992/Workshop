@@ -167,7 +167,7 @@ for newnode in "${masters[@]}"; do
   systemctl start rke2-server.service
   exit
 EOF
-  echo -e " \033[32;5mMaster node joined successfully!\033[0m"
+  echo -e " \033[32;5mMaster node joined successfully\033[0m"
 done
 
 kubectl get nodes
@@ -187,7 +187,7 @@ for newnode in "${workers[@]}"; do
   systemctl start rke2-agent.service
   exit
 EOF
-  echo -e " \033[32;5mWorker node joined successfully!\033[0m"
+  echo -e " \033[32;5mWorker node joined successfully\033[0m"
 done
 
 kubectl get nodes
@@ -201,7 +201,7 @@ curl -sO https://raw.githubusercontent.com/Bk992/Workshop/main/Kubernetes/RKE2/i
 cat ipAddressPool | sed 's/$lbrange/'$lbrange'/g' > $HOME/ipAddressPool.yaml
 
 # Step 9: Deploy IP Pools and l2Advertisement
-echo -e " \033[32;5mAdding IP Pools, waiting for Metallb to be available first. This can take a long time as we're likely being rate limited for container pulls...\033[0m"
+echo -e " \033[32;5mAdding IP Pools, waiting for Metallb to be available first. This can take depending on internet speed and pull rate limiting for this shit ...\033[0m"
 kubectl wait --namespace metallb-system \
                 --for=condition=ready pod \
                 --selector=component=controller \
@@ -249,4 +249,4 @@ while [[ $(kubectl get svc -n cattle-system 'jsonpath={..status.conditions[?(@.t
 done
 kubectl get svc -n cattle-system
 
-echo -e " \033[32;5mAccess Rancher from the IP above - Password is admin!\033[0m"
+echo -e " \033[32;5mGain access to the cluster and screw it up via the IP above - Password is admin\033[0m"
